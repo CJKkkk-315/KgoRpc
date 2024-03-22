@@ -2,6 +2,7 @@ package KgoRpc
 
 import (
 	"KgoRpc/codec"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -9,6 +10,7 @@ import (
 	"log"
 	"net"
 	"sync"
+	"time"
 )
 
 type Call struct {
@@ -25,7 +27,7 @@ func (call *Call) done() {
 }
 
 type Client struct {
-	c       codec.Codec
+	c        codec.Codec
 	opt      *Option
 	sending  sync.Mutex
 	header   codec.Header
@@ -115,6 +117,7 @@ func (client *Client) receive() {
 }
 
 func NewClient(conn net.Conn, opt *Option) (*Client, error) {
+	time.Sleep(2 * time.Second)
 	f := codec.NewCodeFuncMap[opt.CodecType]
 	if f == nil {
 		err := fmt.Errorf("invalid codec type %s", opt.CodecType)
@@ -139,7 +142,7 @@ func newClientCodec(c codec.Codec, opt *Option) *Client {
 		header:   codec.Header{},
 		mu:       sync.Mutex{},
 		seq:      0,
-		pending:  make(map[uint64] *Call),
+		pending:  make(map[uint64]*Call),
 		closing:  false,
 		shutdown: false,
 	}
@@ -163,6 +166,11 @@ func parseOptions(opts ...*Option) (*Option, error) {
 	return opt, nil
 }
 
+type ClientResult struct {
+	client *Client
+	err    error
+}
+
 func Dial(network, address string, opts ...*Option) (*Client, error) {
 	conn, err := net.Dial(network, address)
 	if err != nil {
@@ -175,13 +183,31 @@ func Dial(network, address string, opts ...*Option) (*Client, error) {
 		log.Println("rpc client: parse options error: ", err)
 		return nil, err
 	}
-
-	client, err := NewClient(conn, opt)
-	if err != nil {
-		log.Println("rpc client: new client error: ", err)
-		return nil, err
+	ch := make(chan ClientResult)
+	go func() {
+		client, err := NewClient(conn, opt)
+		ch <- ClientResult{
+			client: client,
+			err:    err,
+		}
+	}()
+	if opt.ConnectTimeout == 0 {
+		result := <-ch
+		return result.client, result.err
 	}
-	return client, err
+
+	select {
+	case <-time.After(opt.ConnectTimeout):
+		return nil, errors.New("rpc client: connect timeout")
+	case result := <-ch:
+		if result.err != nil {
+			log.Println("rpc client: new client error: ", err)
+			return nil, err
+		} else {
+			return result.client, nil
+		}
+
+	}
 }
 
 func (client *Client) send(call *Call) {
@@ -224,8 +250,14 @@ func (client *Client) Go(serviceMethod string, args, reply interface{}, done cha
 	return call
 }
 
-func (client *Client) Call(serviceMethod string, args, reply interface{}) error {
-	call := <-client.Go(serviceMethod, args, reply, make(chan *Call, 1)).Done
-	return call.Error
-}
+func (client *Client) Call(ctx context.Context, serviceMethod string, args, reply interface{}) error {
 
+	call := client.Go(serviceMethod, args, reply, make(chan *Call, 1))
+	select {
+	case <-ctx.Done():
+		client.removeCall(call.Seq)
+		return errors.New("rpc client: call failed: " + ctx.Err().Error())
+	case call := <-call.Done:
+		return call.Error
+	}
+}

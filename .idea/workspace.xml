@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e863978-b49b-4be7-874a-ef3d53ea27a8" name="Default Changelist" comment="" />
+    <list default="true" id="8e863978-b49b-4be7-874a-ef3d53ea27a8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assert.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/server.go" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,12 +23,20 @@
     </option>
   </component>
   <component name="GOROOT" path="C:\Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
   <component name="ProjectId" id="2drHnD9oGzBmR7Xi90L6i2XQ5RV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="GO_FMT" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
@@ -47,25 +62,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build KgoRpc/main">
-    <configuration name="go build KgoRpc/main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="KgoRpc" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <filePath value="$PROJECT_DIR$/main/main.go" />
-      <package value="KgoRpc/main" />
-      <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build server.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="KgoRpc" />
-      <working_directory value="$PROJECT_DIR$/" />
-      <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/server.go" />
-      <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TestMethodType_Call in KgoRpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestClient_Call/server_handle_timeout in KgoRpc">
+    <configuration name="TestClient_Call/client_timeout in KgoRpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="KgoRpc" />
       <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
@@ -73,10 +71,10 @@
       <package value="KgoRpc" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestMethodType_Call$" />
+      <pattern value="^TestClient_Call$/^client_timeout$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestNewService in KgoRpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="TestClient_Call/server_handle_timeout in KgoRpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="KgoRpc" />
       <working_directory value="$PROJECT_DIR$" />
       <framework value="gotest" />
@@ -84,20 +82,67 @@
       <package value="KgoRpc" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestNewService$" />
+      <pattern value="^TestClient_Call$/^server_handle_timeout$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestClient_dialTimeout in KgoRpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="KgoRpc" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="KgoRpc" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient_dialTimeout$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestClient_dialTimeout/0 in KgoRpc" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="KgoRpc" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="KgoRpc" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient_dialTimeout$/^0$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestClient_dialTimeout/timeout in KgoRpc (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="KgoRpc" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="KgoRpc" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestClient_dialTimeout$/^timeout$" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build KgoRpc/main" />
-        <item itemvalue="Go Test.TestMethodType_Call in KgoRpc" />
-        <item itemvalue="Go Test.TestNewService in KgoRpc" />
-        <item itemvalue="Go Build.go build server.go" />
+        <item itemvalue="Go Test.TestClient_Call/server_handle_timeout in KgoRpc" />
+        <item itemvalue="Go Test.TestClient_Call/client_timeout in KgoRpc" />
+        <item itemvalue="Go Test.TestClient_dialTimeout/0 in KgoRpc" />
+        <item itemvalue="Go Test.TestClient_dialTimeout/timeout in KgoRpc (1)" />
+        <item itemvalue="Go Test.TestClient_dialTimeout in KgoRpc" />
       </list>
     </recent_temporary>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
